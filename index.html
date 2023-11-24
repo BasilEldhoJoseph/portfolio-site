@@ -7,9 +7,182 @@
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="mediaqueries.css" />
+    <link rel="stylesheet" href="clock.css"/>
+     <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
+     <script src="js/bootstrap.bundle.js"></script>
   </head>
   <body>
+    <div class="gradient-custom">
+      <style>
+        
+        
+  .clock {
+  --clock-size: 300px;
+  width: 100px;
+  height: 100px;
+  position:absolute;
+  inset: 0;
+  margin: 150px;
+  top: 50px;
+  border-radius: 50%;
+  color: rgba(255, 247, 247, 0.895);
+  
+}
+.spike {
+  position: absolute;
+  width: 6px;
+  height:1px;
+  background: rgb(255, 255, 255);
+  line-height: 20px;
+  transform-origin: 50%;
+  z-index: 5;
+  inset: 0;
+  margin: auto;
+  font-style:normal;
+  transform: rotate(var(--rotate)) translateX(var(--dail-size));
+}
+.spike:nth-child(5n+1) {
+  box-shadow: -7px 0 rgb(255, 255, 255);
+}
+.spike:nth-child(5n+1):after {
+  content: attr(data-i);
+  position: absolute;
+  right: 22px;
+  top: -10px;
+  transition: 1s linear;
+  transform: rotate(calc( var(--dRotate) - var(--rotate)));
+}
+
+.seconds {
+  --dRotate: 0deg;
+  --dail-size: calc((var(--clock-size)/ 2) - 8px);
+  font-weight: 800;
+  font-size: 18px;
+  transform: rotate(calc( -1 * var(--dRotate)));
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: 1s linear;
+}
+
+.minutes {
+  --dail-size: 100px;
+  font-size: 16px;
+  transform: rotate(calc( -1 * var(--dRotate)));
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: 1s linear;
+}
+
+.stop-anim {
+  transition: 0s linear;
+}
+.stop-anim .spike:after {
+  transition: 0s linear !important;
+}
+
+.hour {
+  font-size: 70px;
+  font-weight: 900;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.minute {
+  font-size: 30px;
+  font-weight: 900;
+  position:absolute;
+  background: #ffffff;
+  z-index: 10;
+  left: 105px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.minute:after {
+  content:"";
+  position: absolute;
+  border: 2px solid #ffffff;
+  border-right: none;
+  height: 40px;
+  left: -10px;
+  top: 50%;
+  border-radius: 40px 0 0 40px;
+  width: calc(var(--clock-size)/ 2.75);
+  transform: translatey(-50%);
+}
+      </style>
+      <second class="clock">
+        <div class="seconds"></div>
+        <div class="minutes"></div>
+        <div class="minute">44</div>
+        <div class="hour"></div>
+      </second>
+
+      <script>
+      const seconds = document.querySelector('.seconds');
+      const minutes = document.querySelector('.minutes');
+      const minute = document.querySelector('.minute');
+      const hour = document.querySelector('.hour');
+      
+      // Create spikes
+      for(let s = 0; s < 60 ; s++){
+        let mSpikeEl = document.createElement('i');
+        let sSpikeEl = document.createElement('i');
+        mSpikeEl.className = 'spike'
+        sSpikeEl.className = 'spike'
+        mSpikeEl.style = `--rotate:${6 * s}deg`;
+        sSpikeEl.style = `--rotate:${6 * s}deg`;
+        mSpikeEl.setAttribute('data-i', s);
+        sSpikeEl.setAttribute('data-i', s);
+      
+        seconds.append(sSpikeEl);
+        minutes.append(mSpikeEl);
+      }
+      
+      function getTime() {
+          let date = new Date(),
+          s  = date.getSeconds() ,
+          m  = date.getMinutes();
+        
+          hour.textContent = date.getHours();
+          minute.textContent = m;
+        
+      
+          minutes.style = `--dRotate:${6 * m}deg`;
+      
+          if(s == 0){
+            seconds.classList.add('stop-anim')
+          } else{
+            seconds.classList.remove('stop-anim')
+          }
+          if(m == 0){
+            minutes.classList.add('stop-anim')
+          } else{
+            minutes.classList.remove('stop-anim')
+          }
+          
+            seconds.style = `--dRotate:${6 * s}deg`;
+      }
+      
+      
+      
+      
+      
+      
+      setInterval(getTime, 1000);
+      getTime();
+        </script>
+    
+    
+    
+
+
+
     <nav id="desktop-nav">
+      
       <div class="logo">BASIL ELDHO JOSEPH</div>
       <div>
         <ul class="nav-links">
@@ -353,7 +526,7 @@
             alt="Email icon"
             class="icon contact-icon email-icon"
           />
-          <p><a href="mailto:examplemail@gmail.com">Example@gmail.com</a></p>
+          <p><a href="mailto:examplemail@gmail.com">basileldho1414@gmail.com</a></p>
         </div>
         <div class="contact-info-container">
           <img
@@ -376,8 +549,8 @@
           </ul>
         </div>
       </nav>
-      <p>Copyright &#169; 2023 John Doe. All Rights Reserved.</p>
+      <p>Copyright &#169; 2023 Basil Eldho Joseph. All Rights Reserved.</p>
     </footer>
     <script src="script.js"></script>
-  </body>
+  </div></body>
 </html>
